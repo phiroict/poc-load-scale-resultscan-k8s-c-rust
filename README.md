@@ -36,7 +36,8 @@ for instance
 ```
 
 ```bash
-make start_minikube
+make start_minikube # AMD linux 
+make start_minikube_arm # Mac Metal or ARM Linux
 make deploy_k8s_components
 make compile_c_scanner
 make loadtest

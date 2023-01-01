@@ -15,6 +15,6 @@ spec:
               service:
                 name:  mydeploy
                 port:
-                  number: 80
+                  number: 8080
             pathType: Prefix
             path: /

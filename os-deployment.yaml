@@ -4,26 +4,26 @@ kind: ServiceAccount
 metadata:
   name:  nginx-context-user
   namespace: ex6
----
-kind: SecurityContextConstraints
-apiVersion: security.openshift.io/v1
-metadata:
-  name: scc-admin
-allowPrivilegedContainer: false
-runAsUser:
-  type: RunAsAny
-seLinuxContext:
-  type: RunAsAny
-fsGroup:
-  type: RunAsAny
-supplementalGroups:
-  type: RunAsAny
-users:
-- nginx-context-user   # service account
-allowedCapabilities:
-- SETUID
-- SETGID
-- CHOWN
+#---
+#kind: SecurityContextConstraints
+#apiVersion: security.openshift.io/v1
+#metadata:
+#  name: scc-admin
+#allowPrivilegedContainer: false
+#runAsUser:
+#  type: RunAsAny
+#seLinuxContext:
+#  type: RunAsAny
+#fsGroup:
+#  type: RunAsAny
+#supplementalGroups:
+#  type: RunAsAny
+#users:
+#- nginx-context-user   # service account
+#allowedCapabilities:
+#- SETUID
+#- SETGID
+#- CHOWN
 ---
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
@@ -80,7 +80,7 @@ spec:
             cpu: 20m
             memory: 5Mi
         ports:
-          - containerPort: 80
+          - containerPort: 8080
             name: http-port
         securityContext:          
           # runAsNonRoot: true
