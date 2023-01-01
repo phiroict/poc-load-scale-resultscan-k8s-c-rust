@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: mydeploy
+  name: mydeploy
+  namespace: ex6
+spec:
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - nodePort: 30304
+    port: 8080
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: mydeploy
+  sessionAffinity: None
+  type: NodePort
+#---
+#kind: Route
+#apiVersion: route.openshift.io/v1
+#metadata:
+#  name: mydeploy
+#  namespace: ex6
+#  labels:
+#    app: mydeploy
+#  annotations:
+#    openshift.io/host.generated: 'true'
+#spec:
+#  host: mydeploy-ex6.apps-crc.testing
+#  path: /
+#  to:
+#    kind: Service
+#    name: mydeploy
+#    weight: 100
+#  port:
+#    targetPort: 8080
+#  wildcardPolicy: None

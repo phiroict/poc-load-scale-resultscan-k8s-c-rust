@@ -1,0 +1,20 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mydeploy-ingress
+  namespace: ex6
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - host: mydeploy-ex6.apps-crc.testing
+      http:
+        paths:
+          - backend:
+              service:
+                name:  mydeploy
+                port:
+                  number: 80
+            pathType: Prefix
+            path: /

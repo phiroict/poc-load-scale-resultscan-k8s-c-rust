@@ -1,0 +1,73 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name:  nginx-context-user
+  namespace: ex6
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: security-context-role
+rules:
+  - apiGroups: ["security.openshift.io"]
+    resources: ["securitycontextconstraints"]
+    resourceNames: ["scc-admin", "anyuid"]
+    verbs: ["use"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: nginx-role-binding
+subjects:
+   - kind: ServiceAccount
+     name: nginx-context-user
+roleRef:
+  kind: Role
+  name: security-context-role
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:  
+  labels:
+    app: mydeploy
+  name: mydeploy
+  namespace: ex6
+spec:
+  replicas: 2
+  
+  selector:
+    matchLabels:
+      app: mydeploy
+  strategy: {}
+  template:
+    metadata:      
+      labels:
+        app: mydeploy
+      annotations:
+        openshift.io/sa.scc.uid-range: 0-999
+    spec:
+      serviceAccountName: nginx-context-user
+      containers:
+      - image: nginxinc/nginx-unprivileged
+        name: nginx
+        resources: 
+          limits:
+            cpu: 100m
+            memory: 50Mi
+          requests:
+            cpu: 20m
+            memory: 5Mi
+        ports:
+          - containerPort: 80
+            name: http-port
+        securityContext:          
+          # runAsNonRoot: true
+          # runAsUser: 10014
+          seccompProfile:
+            type: RuntimeDefault
+          capabilities:
+            drop:
+              - ALL
+status: {}

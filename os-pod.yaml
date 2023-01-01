@@ -1,0 +1,48 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name:  ex6
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: frontend
+    env: dev
+  name: nginx
+  namespace: ex6
+spec:
+  containers:
+  - image: nginx
+    name: nginx
+    ports:
+    - name:  http      
+      containerPort: 80
+      protocol: TCP
+    resources: 
+      limits:
+        cpu: 100m
+        memory: 100Mi
+      requests:
+        cpu: 50m
+        memory: 50Mi
+    securityContext:
+      allowPrivilegeEscalation: false
+      # runAsNonRoot: true
+      # runAsUser: 10014
+      capabilities:
+        drop:
+        - ALL
+        add:
+        - NET_BIND_SERVICE
+        - SYS_TIME
+        - SETGID
+        - SETUID
+        - CHOWN
+      seccompProfile: 
+        type: RuntimeDefault
+
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
