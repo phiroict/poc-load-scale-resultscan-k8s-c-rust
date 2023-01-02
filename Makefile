@@ -1,5 +1,7 @@
 loadtest:
 	jmeter -n -t Kube\ clobberer.jmx -l testresults.jtl
+loadtest_mac:
+	jmeter -n -t Kube\ clobberer_mac_m1.jmx -l testresults.jtl
 start_minikube:
 	minikube start --driver kvm --cpus 8 --memory 32000
 	minikube addons enable metrics-server

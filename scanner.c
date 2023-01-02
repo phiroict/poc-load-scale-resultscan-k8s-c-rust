@@ -14,7 +14,7 @@ int main() {
     int count = 0;
 
     printf("Starting read!\n");
-    const char* source = "/home/phiro/Dropbox/Projects/kubernetes/CKAD/training/6/scratch/testresults.jtl";
+    const char* source = "/Users/phiro/Dropbox/Projects/kubernetes/CKAD/training/6/scratch/testresults.jtl";
     FILE *file_handle = fopen(source, "r");
     while ((read = getline(&line, &len, file_handle)) != -1) {
         ++count;

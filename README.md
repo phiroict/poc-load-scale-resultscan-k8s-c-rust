@@ -42,3 +42,22 @@ make deploy_k8s_components
 make compile_c_scanner
 make loadtest
 ```
+
+## Mac & Windows 
+
+On the mac and windows where you need an abstraction for the docker runtime you need to create a tunnel first before the 
+ingress works. 
+The tunnel needs to stay open and you need to be sudo users as it needs to set up routing on the mac/windows. 
+```bash
+minikube tunnel 
+```
+
+# Security 
+
+The pods are set up with the minimum security surface and using an image not needing any capabilities.  
+
+# Load tests 
+
+With the jmeter application we can test the scaling and saturation. Now note that you can crash your cluster with this, proving the 
+use of such a test. 
+The test is pretty simple, just get the home page of the nginx installation. 

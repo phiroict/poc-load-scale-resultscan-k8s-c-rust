@@ -14,11 +14,11 @@ metadata:
   namespace: ex6
 spec:
   containers:
-  - image: nginx
+  - image: nginxinc/nginx-unprivileged
     name: nginx
     ports:
     - name:  http      
-      containerPort: 80
+      containerPort: 8080
       protocol: TCP
     resources: 
       limits:
@@ -29,8 +29,8 @@ spec:
         memory: 50Mi
     securityContext:
       allowPrivilegeEscalation: false
-      # runAsNonRoot: true
-      # runAsUser: 10014
+      runAsNonRoot: true
+      runAsUser: 10014
       capabilities:
         drop:
         - ALL

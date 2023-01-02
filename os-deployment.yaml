@@ -72,6 +72,17 @@ spec:
       containers:
       - image: nginxinc/nginx-unprivileged
         name: nginx
+        readinessProbe:
+          httpGet:
+            port: 8080
+            scheme: HTTP
+        livenessProbe:
+          httpGet:
+            port: 8080
+            path: /
+        startupProbe:
+          httpGet:
+            port: 8080
         resources: 
           limits:
             cpu: 100m
